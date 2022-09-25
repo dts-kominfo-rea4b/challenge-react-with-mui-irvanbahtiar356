@@ -4,6 +4,7 @@ import ContactForm from "./components/ContactForm";
 import Header from "./components/Header";
 import Contact from "./components/Contact";
 import Grid from "@mui/material/Grid";
+import { Card, CardContent, List, ListItem } from "@mui/material";
 
 // Uncomment untuk memuat daftar kontak
 import contactsJSON from "./data/contacts.json";
@@ -16,11 +17,10 @@ const App = () => {
   // Masukkan contacts yang sudah didapat dalam JSON sebagai initial state
   // Buatlah handler untuk menambahkan kontak baru yang akan dikirim ke ContactForm
 
-  const [contact, setContact] = useState(contactsJSON);
-  console.log(contact);
+  const [contacts, setContacts] = useState(contactsJSON);
 
   const addNewContact = (newContact) => {
-    setContact([...contact, newContact]);
+    setContacts([...contacts, newContact]);
   };
 
   return (
@@ -31,7 +31,22 @@ const App = () => {
           <ContactForm addNewContact={addNewContact} />
         </Grid>
         <Grid item xs={8}>
-          <Contact data={contact} />
+          {contacts.map((contact, index) => {
+            return (
+              <Card
+                variant="outlined"
+                sx={{ maxWidth: 500, bgcolor: "#e3f2fd" }}
+              >
+                <CardContent>
+                  <List>
+                    <ListItem key={index} disablePadding>
+                      <Contact data={contact} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+            );
+          })}
         </Grid>
       </Grid>
     </div>
